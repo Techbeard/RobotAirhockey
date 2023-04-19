@@ -2,7 +2,7 @@ import cv2
 import numpy as np
   
 # Read image.
-img = cv2.imread('VonOben.jpg', cv2.IMREAD_COLOR)
+img = cv2.imread('.\Testbilder\VonOben.jpg', cv2.IMREAD_COLOR)
 
 #img = cv2.VideoCapture(0)
 
