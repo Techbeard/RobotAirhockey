@@ -7,16 +7,17 @@ def resize(img):
         return cv2.resize(img, (512, 512))
 
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(1,cv2.CAP_DSHOW)
 
 while True:
     
 
     rat,frame = cap.read()
     cv2.imshow("Camera", resize(frame))
-    #img = cv2.VideoCapture(0)
-   # l_b=np.array([0,230,170])# lower hsv bound for red
-   # u_b=np.array([255,255,220])# upper hsv bound to red
+ 
+
+   # l_b=np.array([0,150,100])# lower hsv bound for red
+    #u_b=np.array([5,255,255])# upper hsv bound to red
 
     #hsv=cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
     #mask=cv2.inRange(hsv,l_b,u_b)
@@ -26,7 +27,7 @@ while True:
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     
     # Blur using 3 * 3 kernel.
-    #gray_blurred = cv2.blur(gray, (3, 3))
+    gray_blurred = cv2.blur(gray, (3, 3))
     
     # Apply Hough transform on the blurred image.
     detected_circles = cv2.HoughCircles(gray, 
