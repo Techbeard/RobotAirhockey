@@ -5,8 +5,12 @@ import numpy as np
 img = cv2.imread('.\Testbilder\VonOben.jpg', cv2.IMREAD_COLOR)
 
 #img = cv2.VideoCapture(0)
-l_b=np.array([247,73,96])# lower hsv bound for blue
-u_b=np.array([225,73,96])# upper hsv bound to blue
+#l_b=np.array([0,150,100])# lower hsv bound for red
+#u_b=np.array([255,255,255])# upper hsv bound to red
+
+l_b=np.array([0,150,100])# lower hsv bound for red
+u_b=np.array([5,255,255])# upper hsv bound to red
+
 
 # Convert to grayscale.
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -25,7 +29,7 @@ cv2.imshow("mask",mask)
 # Apply Hough transform on the blurred image.
 detected_circles = cv2.HoughCircles(gray_blurred, 
                    cv2.HOUGH_GRADIENT, 1, 20, param1 = 50,
-               param2 = 30, minRadius = 30, maxRadius = 40)
+               param2 = 30, minRadius = 10, maxRadius = 100)
   
 # Draw circles that are detected.
 if detected_circles is not None:
@@ -38,11 +42,11 @@ if detected_circles is not None:
   
         # Draw the circumference of the circle.
         cv2.circle(img, (a, b), r, (0, 255, 0), 2)
-  
+        cv2.putText(img,str(pt),[a,b],cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255))
         # Draw a small circle (of radius 1) to show the center.
         cv2.circle(img, (a, b), 1, (0, 0, 255), 3)
         print(a,b)
-        cv2.imshow("Detected Circle", cv2.resize(img,[400,200],4))
+cv2.imshow("Detected Circle", img)
         
 
 cv2.waitKey(0)

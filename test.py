@@ -7,7 +7,7 @@ def resize(img):
         return cv2.resize(img, (512, 512))
 
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture("TestBilder\Testviedeo.mp4")
 
 while True:
     
@@ -15,14 +15,17 @@ while True:
     rat,frame = cap.read()
     cv2.imshow("Camera", resize(frame))
     #img = cv2.VideoCapture(0)
-   # l_b=np.array([0,230,170])# lower hsv bound for red
-   # u_b=np.array([255,255,220])# upper hsv bound to red
+   # l_b=np.array([0,150,100])# lower hsv bound for red
+    #u_b=np.array([5,255,255])# upper hsv bound to red
 
-    #hsv=cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
-    #mask=cv2.inRange(hsv,l_b,u_b)
-    #cv2.imshow("mask",mask)
+   # l_b=np.array([200,0,20])# lower hsv bound for blue
+    #u_b=np.array([255,150,30])# upper hsv bound to blueq
 
-    # Convert to grayscale.
+    hsv=cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
+    mask=cv2.inRange(hsv,l_b,u_b)
+    cv2.imshow("mask",mask)
+
+    # Convert to grayscale
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     
     # Blur using 3 * 3 kernel.
