@@ -1,5 +1,5 @@
 import cv2
-import numpy as np
+import numpy as npgit 
   
 # Read image.
 img = cv2.imread('.\Testbilder\VonOben.jpg', cv2.IMREAD_COLOR)
