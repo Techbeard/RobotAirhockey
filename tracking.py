@@ -41,7 +41,7 @@ def doTracking(frame):
     # Apply Hough transform on the blurred image.
     detected_circles = cv2.HoughCircles(gray, 
                        cv2.HOUGH_GRADIENT, 1, 20, param1 = 50,
-                   param2 = 30, minRadius = 19, maxRadius = 23)
+                   param2 = 30, minRadius = 60, maxRadius = 80)
     
     # Draw circles that are detected.
     if detected_circles is not None:
@@ -54,10 +54,10 @@ def doTracking(frame):
             #outpt = ''
             #outpt = pt
             # Draw the circumference of the circle.
-            cv2.circle(frame, (a, b), r, (0, 255, 0), 2)
-            cv2.putText(frame,str(pt),[a,b],cv2.FONT_HERSHEY_SIMPLEX,2,(0,0,255))
+            cv2.circle(color, (a, b), r, (0, 255, 0), 2)
+            cv2.putText(color,str(pt),[a,b],cv2.FONT_HERSHEY_SIMPLEX,2,(0,0,255))
             # Draw a small circle (of radius 1) to show the center.
-            cv2.circle(frame, (a, b), 1, (0, 0, 255), 3)
+            cv2.circle(color, (a, b), 1, (0, 0, 255), 3)
             print(a,b)
             #cv2.imshow("Detected Circle", resize(frame))
 
