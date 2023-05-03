@@ -1,13 +1,18 @@
 """BSD 2-Clause License
+
 Copyright (c) 2019, Allied Vision Technologies GmbH
 All rights reserved.
+
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
+
 1. Redistributions of source code must retain the above copyright notice, this
    list of conditions and the following disclaimer.
+
 2. Redistributions in binary form must reproduce the above copyright notice,
    this list of conditions and the following disclaimer in the documentation
    and/or other materials provided with the distribution.
+
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -24,6 +29,7 @@ import sys
 import cv2
 from typing import Optional
 from vimba import *
+from tracking import doTracking
 
 
 def print_preamble():
@@ -87,7 +93,11 @@ def setup_camera(cam: Camera):
     with cam:
         # Enable auto exposure time setting if camera supports it
         try:
-            cam.ExposureAuto.set('Continuous')
+            #cam.ExposureAuto.set('Continuous')
+            cam.ExposureAuto.set('Off')
+            cam.ExposureTimeAbs.set(1000000/200) # 1M / FPS
+            #cam.Gain.set()
+
 
         except (AttributeError, VimbaFeatureError):
             pass
@@ -111,20 +121,22 @@ def setup_camera(cam: Camera):
 
         # Query available, open_cv compatible pixel formats
         # prefer color formats over monochrome formats
-        cv_fmts = intersect_pixel_formats(cam.get_pixel_formats(), OPENCV_PIXEL_FORMATS)
-        color_fmts = intersect_pixel_formats(cv_fmts, COLOR_PIXEL_FORMATS)
+        # cv_fmts = intersect_pixel_formats(cam.get_pixel_formats(), OPENCV_PIXEL_FORMATS)
+        # color_fmts = intersect_pixel_formats(cv_fmts, COLOR_PIXEL_FORMATS)
 
-        if color_fmts:
-            cam.set_pixel_format(color_fmts[0])
+        # if color_fmts:
+        #     cam.set_pixel_format(color_fmts[0])
 
-        else:
-            mono_fmts = intersect_pixel_formats(cv_fmts, MONO_PIXEL_FORMATS)
+        # else:
+        #     mono_fmts = intersect_pixel_formats(cv_fmts, MONO_PIXEL_FORMATS)
 
-            if mono_fmts:
-                cam.set_pixel_format(mono_fmts[0])
+        #     if mono_fmts:
+        #         cam.set_pixel_format(mono_fmts[0])
 
-            else:
-                abort('Camera does not support a OpenCV compatible format natively. Abort.')
+        #     else:
+        #         abort('Camera does not support a OpenCV compatible format natively. Abort.')
+        print(cam.get_pixel_formats())
+        cam.set_pixel_format(PixelFormat.BayerRG8)
 
 
 class Handler:
@@ -140,10 +152,11 @@ class Handler:
             return
 
         elif frame.get_status() == FrameStatus.Complete:
-            print('{} acquired {}'.format(cam, frame), flush=True)
+            #print('{} acquired {}'.format(cam, frame), flush=True)
 
             msg = 'Stream from \'{}\'. Press <Enter> to stop stream.'
-            cv2.imshow(msg.format(cam.get_name()), frame.as_opencv_image())
+            doTracking(frame.as_numpy_ndarray())
+            # cv2.imshow(msg.format(cam.get_name()), frame.as_numpy_ndarray())
 
         cam.queue_frame(frame)
 

@@ -1,19 +1,27 @@
 import numpy as np
 import cv2
-
-
+import json
 def resize(img):
-        # arg1- input image, arg- output_width, output_height
+        # arg1- input image, arg- output_width, output_heightq
         return cv2.resize(img, (512, 512))
 
+def doTracking(frame):
 
-cap = cv2.VideoCapture(1,cv2.CAP_DSHOW)
+# with open('config.json','r') as file:
+#     config = json.load(file)
 
-while True:
+# print(config["camera"])
+
+
+
+
+# cap = cv2.VideoCapture(1,cv2.CAP_DSHOW)
+
+# while True:
     
 
-    rat,frame = cap.read()
-    cv2.imshow("Camera", resize(frame))
+    # rat,frame = cap.read()
+    #cv2.imshow("Camera", resize(frame))
  
 
    # l_b=np.array([0,150,100])# lower hsv bound for red
@@ -24,7 +32,8 @@ while True:
     #cv2.imshow("mask",mask)
 
     # Convert to grayscale.
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    color = cv2.cvtColor(frame, cv2.COLOR_BAYER_RG2RGB)
+    gray = cv2.cvtColor(frame, cv2.COLOR_BAYER_RG2GRAY)
     
     # Blur using 3 * 3 kernel.
     gray_blurred = cv2.blur(gray, (3, 3))
@@ -52,10 +61,10 @@ while True:
             print(a,b)
             #cv2.imshow("Detected Circle", resize(frame))
 
-    cv2.imshow("Detected Circle", resize(frame))         
+    cv2.imshow("Detected Circle", color)         
 
-    key=cv2.waitKey(1)
-    if key==ord('q'):
-        break
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+    # key=cv2.waitKey(1)
+    # if key==ord('q'):
+    #     break
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()

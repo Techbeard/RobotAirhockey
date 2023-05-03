@@ -1,0 +1,30 @@
+{
+    "camera": {
+        "Width": 852,
+        "Heigth": 480,
+        "key": true
+    },
+    "tracking": {
+        "minRadiusPuk": 19,
+        "maxRadiusPuk": 23,
+        "MinColour": [
+            15,
+            55,
+            55
+        ],
+        "MaxClour": [
+            20,
+            20,
+            20
+        ]
+    },
+    "field": {
+        "Width": 852,
+        "Heigth": 480,
+        "midpoint": [
+            122,
+            55
+        ]
+    },
+    "xyCore": {}
+}
