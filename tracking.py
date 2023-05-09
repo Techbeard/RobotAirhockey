@@ -8,6 +8,10 @@ def resize(img):
 
 
 cap = cv2.VideoCapture(1,cv2.CAP_DSHOW)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 852)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+#cap.set(cv2.CAP_PROP_EXPOSURE, 0.0001)
+
 
 while True:
     
@@ -30,7 +34,7 @@ while True:
     gray_blurred = cv2.blur(gray, (3, 3))
     
     # Apply Hough transform on the blurred image.
-    detected_circles = cv2.HoughCircles(gray, 
+    detected_circles = cv2.HoughCircles(gray_blurred, 
                        cv2.HOUGH_GRADIENT, 1, 20, param1 = 50,
                    param2 = 30, minRadius = 19, maxRadius = 23)
     
