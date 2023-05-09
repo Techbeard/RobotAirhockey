@@ -10,6 +10,7 @@ def resize(img):
 cap = cv2.VideoCapture(1,cv2.CAP_DSHOW)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 852)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+#cap.set(cv2.CAP_PROP_FPS, 30)
 #cap.set(cv2.CAP_PROP_EXPOSURE, 0.0001)
 
 
